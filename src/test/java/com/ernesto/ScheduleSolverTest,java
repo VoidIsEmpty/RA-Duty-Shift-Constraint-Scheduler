@@ -1,0 +1,42 @@
+package com.ernesto;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import java.util.ArrayList;
+import java.util.List;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class ScheduleSolverTest {
+
+    private List<StaffMember> staffPool;
+    private ShiftCalendar calendar;
+    private ScheduleSolver solver;
+
+    @BeforeEach
+    public void setUp() {
+        staffPool = new ArrayList<>();
+        staffPool.add(new StaffMember("RA01", "Alex Smith", 5));
+        staffPool.add(new StaffMember("RA02", "Jordan Taylor", 5));
+        
+        calendar = new ShiftCalendar(2026, 11);
+        solver = new ScheduleSolver(staffPool, calendar);
+    }
+
+    @Test
+    public void testGenerateScheduleSuccess() {
+        boolean success = solver.generateSchedule(2026, 11);
+        assertTrue(success, "Schedule generation should complete successfully.");
+    }
+
+    @Test
+    public void testCalculateFairnessScore() {
+        // Assign shifts to populate counts
+        staffPool.get(0).incrementAssignedShifts();
+        staffPool.get(0).incrementAssignedShifts();
+        staffPool.get(1).incrementAssignedShifts();
+
+        double fairnessScore = solver.calculateFairnessScore();
+        // Score should be computed without errors (e.g., variance or standard deviation)
+        assertTrue(fairnessScore >= 0.0, "Fairness score must be non-negative.");
+    }
+}
