@@ -5,16 +5,26 @@ class StaffMember {
     - int maxShiftsPerMonth
     - int assignedShiftsCount
     - List<LocalDate> unavailableDates
+    + StaffMember(String id, String name, int maxShiftsPerMonth)
     + boolean isAvailable(LocalDate date)
     + void incrementAssignedShifts()
     + String getId()
+    + void setId(String id)
     + String getName()
+    + void setName(String name)
+    + int getMaxShiftsPerMonth()
+    + void setMaxShiftsPerMonth(int maxShiftsPerMonth)
+    + int getAssignedShiftsCount()
+    + void setAssignedShiftsCount(int assignedShiftsCount)
+    + List<LocalDate> getUnavailableDates()
+    + void setUnavailableDates(List<LocalDate> unavailableDates)
 }
 
 class ShiftCalendar {
     - int year
     - int month
     - Map<LocalDate, List<StaffMember>> scheduledShifts
+    + ShiftCalendar(int year, int month)
     + void assignShift(LocalDate date, StaffMember staff)
     + List<StaffMember> getStaffForDate(LocalDate date)
     + boolean hasAssignedShift(LocalDate date, StaffMember staff)
@@ -23,6 +33,7 @@ class ShiftCalendar {
 class ScheduleSolver {
     - List<StaffMember> staffPool
     - ShiftCalendar calendar
+    + ScheduleSolver(List<StaffMember> staffPool, ShiftCalendar calendar)
     + boolean generateSchedule(int year, int month)
     + double calculateFairnessScore()
     - StaffMember selectBestCandidate(LocalDate date, List<StaffMember> eligibleStaff)
