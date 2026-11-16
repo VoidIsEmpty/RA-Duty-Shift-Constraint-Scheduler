@@ -11,15 +11,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Set up JDK 23
+      - name: Set up JDK 11
         uses: actions/setup-java@v3
         with:
-          java-version: '23'
+          java-version: '11'
           distribution: 'temurin'
       - name: Build with Maven
-        run: mvn clean test site
+        run: "C:/Users/ernes/apache-maven-3.9.9/bin/mvn.cmd" clean test site
       - name: Upload Report Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: project-reports
           path: target/site/
