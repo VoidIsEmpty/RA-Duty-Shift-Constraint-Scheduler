@@ -1,0 +1,39 @@
+package com.ernesto;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import java.time.LocalDate;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class StaffMemberTest {
+
+    private StaffMember staff;
+
+    @BeforeEach
+    public void setUp() {
+        staff = new StaffMember("RA01", "Alex Smith", 4);
+    }
+
+    @Test
+    public void testInitialState() {
+        assertEquals("RA01", staff.getId());
+        assertEquals("Alex Smith", staff.getName());
+        assertEquals(4, staff.getMaxShiftsPerMonth());
+        assertEquals(0, staff.getAssignedShiftsCount());
+    }
+
+    @Test
+    public void testAvailability() {
+        LocalDate testDate = LocalDate.of(2026, 11, 20);
+        assertTrue(staff.isAvailable(testDate));
+
+        staff.getUnavailableDates().add(testDate);
+        assertFalse(staff.isAvailable(testDate));
+    }
+
+    @Test
+    public void testIncrementAssignedShifts() {
+        staff.incrementAssignedShifts();
+        assertEquals(1, staff.getAssignedShiftsCount());
+    }
+}
