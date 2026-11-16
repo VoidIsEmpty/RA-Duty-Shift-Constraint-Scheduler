@@ -1,0 +1,34 @@
+@startuml
+class StaffMember {
+    - String id
+    - String name
+    - int maxShiftsPerMonth
+    - int assignedShiftsCount
+    - List<LocalDate> unavailableDates
+    + boolean isAvailable(LocalDate date)
+    + void incrementAssignedShifts()
+    + String getId()
+    + String getName()
+}
+
+class ShiftCalendar {
+    - int year
+    - int month
+    - Map<LocalDate, List<StaffMember>> scheduledShifts
+    + void assignShift(LocalDate date, StaffMember staff)
+    + List<StaffMember> getStaffForDate(LocalDate date)
+    + boolean hasAssignedShift(LocalDate date, StaffMember staff)
+}
+
+class ScheduleSolver {
+    - List<StaffMember> staffPool
+    - ShiftCalendar calendar
+    + boolean generateSchedule(int year, int month)
+    + double calculateFairnessScore()
+    - StaffMember selectBestCandidate(LocalDate date, List<StaffMember> eligibleStaff)
+}
+
+StaffMember "0..*" --o ShiftCalendar : assigned to >
+ScheduleSolver --> StaffMember : manages >
+ScheduleSolver --> ShiftCalendar : populates >
+@enduml
